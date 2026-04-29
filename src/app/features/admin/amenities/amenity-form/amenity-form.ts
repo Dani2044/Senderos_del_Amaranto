@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Amenity, AmenityType } from '../../../../model/amenity';
@@ -10,7 +10,7 @@ export interface AmenityFormPayload {
 @Component({
   selector: 'app-amenity-form',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [FormsModule],
   templateUrl: './amenity-form.html',
   styleUrls: ['./amenity-form.css']
 })

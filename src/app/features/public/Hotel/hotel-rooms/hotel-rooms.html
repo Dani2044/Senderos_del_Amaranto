@@ -9,35 +9,43 @@
       <!-- PNG superpuesto; no bloquea clics -->
       <img class="overlay-img" [src]="overlayUrl" alt="" />
 
-      <div *ngIf="loading" class="state muted">Cargando…</div>
-      <div *ngIf="!loading && error" class="state error">{{ error }}</div>
+      @if (loading) {
+        <div class="state muted">Cargando…</div>
+      }
+      @if (!loading && error) {
+        <div class="state error">{{ error }}</div>
+      }
 
-      <div *ngIf="!loading && !error && items.length" class="flowing-menu">
-        <a
-          class="menu-item"
-          *ngFor="let it of items; trackBy: trackByType"
-          [routerLink]="'/room-type/' + it.typeId"
+      @if (!loading && !error && items.length) {
+        <div class="flowing-menu">
+          @for (it of items; track trackByType($index, it)) {
+            <a
+              class="menu-item"
+              [routerLink]="'/room-type/' + it.typeId"
           [queryParams]="{
             hotelId: hotel?.hotel_id
           }"
-          [attr.aria-label]="it.typeName + ' — ' + it.themeName"
-        >
-          <span class="label">{{ it.typeName }} — {{ it.themeName }}</span>
+              [attr.aria-label]="it.typeName + ' — ' + it.themeName"
+              >
+              <span class="label">{{ it.typeName }} — {{ it.themeName }}</span>
+              <div class="marquee">
+                <div class="inner">
+                  <span class="repeat">{{ it.typeName }} — {{ it.themeName }}</span>
+                  <span class="pill" [style.backgroundImage]="'url(' + it.image + ')'"></span>
+                  <span class="repeat">{{ it.typeName }} — {{ it.themeName }}</span>
+                  <span class="pill" [style.backgroundImage]="'url(' + it.image + ')'"></span>
+                </div>
+              </div>
+            </a>
+          }
+        </div>
+      }
 
-          <div class="marquee">
-            <div class="inner">
-              <span class="repeat">{{ it.typeName }} — {{ it.themeName }}</span>
-              <span class="pill" [style.backgroundImage]="'url(' + it.image + ')'"></span>
-              <span class="repeat">{{ it.typeName }} — {{ it.themeName }}</span>
-              <span class="pill" [style.backgroundImage]="'url(' + it.image + ')'"></span>
-            </div>
-          </div>
-        </a>
-      </div>
-
-      <div *ngIf="!loading && !error && !items.length" class="state muted">
-        No hay habitaciones disponibles.
-      </div>
+      @if (!loading && !error && !items.length) {
+        <div class="state muted">
+          No hay habitaciones disponibles.
+        </div>
+      }
     </div>
   </div>
 </section>

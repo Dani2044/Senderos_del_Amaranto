@@ -2,7 +2,7 @@ import {
   Component, Input, AfterViewInit, OnDestroy,
   ViewChild, ElementRef, Inject, ChangeDetectorRef
 } from '@angular/core';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 import { PLATFORM_ID } from '@angular/core';
 
 export interface Attraction {
@@ -23,7 +23,7 @@ interface LegendItem { label: string; color: string; }
 @Component({
   standalone: true,
   selector: 'app-hotel-location',
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './hotel-location.html',
   styleUrls: ['./hotel-location.scss']
 })

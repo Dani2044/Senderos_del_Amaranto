@@ -1,5 +1,5 @@
 import { Component, inject, OnInit, Input, Output, EventEmitter, PLATFORM_ID, ViewChild, ElementRef } from '@angular/core';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TaskService } from '../../../../services/task';
 import { RoomService } from '../../../../services/room';
@@ -22,7 +22,7 @@ const TEXT_FILTER_CONFIG: ITextFilterParams = {
 @Component({
   selector: 'app-task-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, AgGridAngular],
+  imports: [FormsModule, AgGridAngular],
   templateUrl: './task-list.html',
   styleUrls: ['./task-list.css']
 })

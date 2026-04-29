@@ -1,12 +1,12 @@
 import { Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { AgGridModule } from 'ag-grid-angular';
 import type { ColDef } from 'ag-grid-community';
 
 @Component({
   standalone: true,
   selector: 'app-client-reservations-grid',
-  imports: [CommonModule, AgGridModule],
+  imports: [AgGridModule],
   template: `
     <ag-grid-angular
       style="width: 100%; height: 400px;"

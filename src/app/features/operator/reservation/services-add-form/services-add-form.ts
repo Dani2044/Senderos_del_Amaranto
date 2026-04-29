@@ -8,7 +8,7 @@ import {
   SimpleChanges,
   inject,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { Reservation } from '../../../../model/reservation';
 import { ServiceOffering } from '../../../../model/service-offering';
@@ -30,7 +30,7 @@ import { Task } from '../../../../model/task';
 @Component({
   selector: 'app-services-add-form',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [FormsModule],
   templateUrl: './services-add-form.html',
   styleUrl: './services-add-form.css',
 })

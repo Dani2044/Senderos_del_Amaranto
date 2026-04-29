@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule, NgForm } from '@angular/forms';
 import { environment } from '../../../../environments/environment';
 import { User } from '../../../model/user';
@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 @Component({
   standalone: true,
   selector: 'app-operator-profile',
-  imports: [CommonModule, FormsModule],
+  imports: [FormsModule],
   templateUrl: './operator-profile.html',
   styleUrls: ['./operator-profile.css'],
 })

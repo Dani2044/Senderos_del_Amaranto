@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { User, RoleEntity } from '../../../../model/user';
 import { environment } from '../../../../../environments/environment';
@@ -6,7 +6,7 @@ import { environment } from '../../../../../environments/environment';
 @Component({
   selector: 'app-user-detail',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './user-detail.html',
   styleUrls: ['./user-detail.css', '../user-form/user-form.css'],
 })

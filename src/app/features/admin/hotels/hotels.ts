@@ -1,5 +1,5 @@
 import { Component, OnInit, inject, Inject, PLATFORM_ID, ViewChild, ElementRef, ViewEncapsulation } from '@angular/core';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AgGridAngular } from 'ag-grid-angular';
 import { ColDef, GridApi, GridOptions, ModuleRegistry, AllCommunityModule, PaginationModule, ITextFilterParams, INumberFilterParams } from 'ag-grid-community';
@@ -41,7 +41,7 @@ interface Hotel {
 @Component({
   standalone: true,
   selector: 'app-admin-hotels',
-  imports: [CommonModule, FormsModule, AgGridAngular, HotelDetailComponent],
+  imports: [FormsModule, AgGridAngular, HotelDetailComponent],
   styleUrls: ['./hotels.css'],
   templateUrl: `./hotels.html`,
   encapsulation: ViewEncapsulation.None

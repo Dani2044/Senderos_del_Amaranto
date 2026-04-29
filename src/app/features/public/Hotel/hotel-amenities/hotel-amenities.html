@@ -19,23 +19,27 @@
   </div>
 
   <div class="amenities-grid">
-    <div
-      class="amenity-card"
-      *ngFor="let c of cards; let i = index"
+    @for (c of cards; track c; let i = $index) {
+      <div
+        class="amenity-card"
       [ngClass]="{
         'image-only': c.type === 'image-only',
         'white-text': c.type === 'white-text',
         'leafy-text': c.type === 'leafy-text',
         'leafy-filler': c.type === 'leafy-filler'
       }"
-      [style.background-image]="c.type !== 'white-text' ? c.bg : null"
-      [style.background-color]="c.type === 'white-text' ? 'white' : null"
-    >
-      <div class="card-overlay" *ngIf="c.type === 'leafy-text' || c.type === 'leafy-filler'"></div>
-
-      <div class="card-content" *ngIf="c.title">
-        <h3 class="card-title">{{ c.title }}</h3>
+        [style.background-image]="c.type !== 'white-text' ? c.bg : null"
+        [style.background-color]="c.type === 'white-text' ? 'white' : null"
+        >
+        @if (c.type === 'leafy-text' || c.type === 'leafy-filler') {
+          <div class="card-overlay"></div>
+        }
+        @if (c.title) {
+          <div class="card-content">
+            <h3 class="card-title">{{ c.title }}</h3>
+          </div>
+        }
       </div>
-    </div>
+    }
   </div>
 </section>

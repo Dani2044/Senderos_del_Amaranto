@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, EventEmitter, Input, Output, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AmenitiesService } from '../../../../services/amenities';
@@ -29,7 +29,7 @@ export interface HotelFormPayload {
 @Component({
   selector: 'app-hotel-form',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [FormsModule],
   templateUrl: './hotel-form.html',
   styleUrls: ['./hotel-form.css']
 })

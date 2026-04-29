@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../../environments/environment';
 import { RoomService } from '../../../../services/room';
@@ -38,7 +38,7 @@ interface MenuItemVM {
 @Component({
   standalone: true,
   selector: 'app-hotel-rooms',
-  imports: [CommonModule, RouterModule],
+  imports: [RouterModule],
   templateUrl: './hotel-rooms.html',
   styleUrls: ['./hotel-rooms.scss'],
 })

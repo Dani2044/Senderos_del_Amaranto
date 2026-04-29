@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, EventEmitter, OnInit, Output, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { catchError, of, switchMap } from 'rxjs';
@@ -14,7 +14,7 @@ type AlertKind = 'success' | 'danger';
 @Component({
   selector: 'app-client-reservation',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReservationDetail],
+  imports: [FormsModule, ReservationDetail],
   templateUrl: './client-reservation.html',
   styleUrls: ['./client-reservation.css'],
 })

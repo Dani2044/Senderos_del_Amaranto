@@ -1,5 +1,5 @@
 import { Component, inject, OnInit, Input, Output, EventEmitter, PLATFORM_ID, ViewChild, ElementRef } from '@angular/core';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { StaffMemberService } from '../../../../services/staff-member';
 import { DepartmentService } from '../../../../services/department';
@@ -24,7 +24,7 @@ const TEXT_FILTER_CONFIG: ITextFilterParams = {
 @Component({
   selector: 'app-staff-member-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, TaskList, AgGridAngular],
+  imports: [FormsModule, TaskList, AgGridAngular],
   templateUrl: './staff-member-list.html',
   styleUrls: ['./staff-member-list.css']
 })

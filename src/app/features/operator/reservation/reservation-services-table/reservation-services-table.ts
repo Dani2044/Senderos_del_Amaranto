@@ -11,7 +11,7 @@ import {
   ViewChild,
   inject,
 } from '@angular/core';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 import { ReservationService as ReservationServiceModel } from '../../../../model/reservation-service';
 import { ReservationFacade } from '../reservation';
 import { AgGridAngular } from 'ag-grid-angular';
@@ -38,7 +38,7 @@ import { formatDaysLabel } from '../../../admin/services-offering-component/serv
 @Component({
   selector: 'app-reservation-services-table',
   standalone: true,
-  imports: [CommonModule, AgGridAngular],
+  imports: [AgGridAngular],
   templateUrl: './reservation-services-table.html',
   styleUrl: './reservation-services-table.css',
 })

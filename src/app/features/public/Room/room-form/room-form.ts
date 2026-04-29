@@ -1,6 +1,6 @@
 // src/app/features/rooms/room-form/room-form.component.ts
 import { Component, EventEmitter, Output, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { forkJoin } from 'rxjs';
@@ -25,7 +25,7 @@ type ReservationCreatedPayload = {
 @Component({
   selector: 'app-room-form',
   standalone: true,
-  imports: [CommonModule, RouterModule, ReactiveFormsModule],
+  imports: [RouterModule, ReactiveFormsModule],
   templateUrl: './room-form.html',
   styleUrls: ['./room-form.scss']
 })

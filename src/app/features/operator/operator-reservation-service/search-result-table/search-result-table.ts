@@ -8,7 +8,7 @@ import {
   SimpleChanges,
   inject,
 } from '@angular/core';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 import { AgGridAngular } from 'ag-grid-angular';
 import {
   AllCommunityModule,
@@ -32,7 +32,7 @@ import {
 @Component({
   selector: 'app-search-result-table',
   standalone: true,
-  imports: [CommonModule, AgGridAngular],
+  imports: [AgGridAngular],
   templateUrl: './search-result-table.html',
   styleUrl: './search-result-table.css',
 })

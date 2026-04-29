@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, computed, signal, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ServiceOffering } from '../../../../model/service-offering';
 import { ServiceOfferingService } from '../../../../services/service-offering-service';
 import { ServiceModalComponent } from './service-modal/service-modal';
@@ -10,7 +10,7 @@ type Group = { category: string; items: ServiceOffering[] };
 @Component({
   standalone: true,
   selector: 'app-hotel-services',
-  imports: [CommonModule, ServiceModalComponent, ShuffleOnHoverDirective],
+  imports: [ServiceModalComponent, ShuffleOnHoverDirective],
   templateUrl: './hotel-services.html',
   styleUrls: ['./hotel-services.scss']
 })

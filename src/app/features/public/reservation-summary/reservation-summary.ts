@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { forkJoin } from 'rxjs';
 
@@ -14,7 +14,7 @@ import { User } from '../../../model/user';
 @Component({
 	selector: 'app-reservation-summary',
 	standalone: true,
-	imports: [CommonModule, RouterModule],
+	imports: [RouterModule],
 	templateUrl: './reservation-summary.html',
 	styleUrls: ['./reservation-summary.scss']
 })

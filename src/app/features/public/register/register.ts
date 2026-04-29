@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../../services/auth';
@@ -10,7 +10,7 @@ import { environment } from '../../../../environments/environment';
 @Component({
   standalone: true,
   selector: 'app-register',
-  imports: [CommonModule, ReactiveFormsModule, RouterLink, BlindsBgComponent],
+  imports: [ReactiveFormsModule, RouterLink, BlindsBgComponent],
   templateUrl: './register.html',
   styleUrls: ['./register.css'],
 })

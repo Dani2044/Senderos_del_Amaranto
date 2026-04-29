@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { environment } from '../../../../../environments/environment';
 
@@ -22,7 +22,7 @@ interface Amenity {
 @Component({
   selector: 'app-hotel-detail',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './hotel-detail.html',
   styleUrls: ['./hotel-detail.css', '../hotel-form/hotel-form.css']
 })

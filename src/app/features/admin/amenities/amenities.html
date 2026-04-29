@@ -1,139 +1,150 @@
-<ng-container *ngIf="isBrowser && !editing && !selected">
+@if (isBrowser && !editing && !selected) {
   <details #createDetails (toggle)="onCreateToggle($event)">
     <summary>Crear amenity</summary>
-
-    <div class="card card-body amenity-create-form" *ngIf="showCreate">
-      <div class="row g-3">
-        <div class="col-md-6">
-          <label class="form-label">Nombre</label>
-          <input
-            class="form-control input-soft"
-            placeholder="Nombre de amenity"
-            [(ngModel)]="createForm.name"
-            name="name"
-            required
-          />
-        </div>
-        <div class="col-md-6">
-          <label class="form-label">Tipo</label>
-          <select class="form-select input-soft" [(ngModel)]="createForm.type" name="type" required>
-            <option [ngValue]="undefined">Selecciona tipo…</option>
-            <option [ngValue]="amenityTypes.HOTEL">Hotel</option>
-            <option [ngValue]="amenityTypes.ROOM">Habitación</option>
-          </select>
-        </div>
-        <div class="col-12">
-          <label class="form-label">Imagen URL</label>
-          <input
-            class="form-control input-soft"
-            placeholder="https://ejemplo.com/imagen.jpg"
-            [(ngModel)]="createForm.image"
-            name="image"
-          />
-          <div class="mt-2" *ngIf="createForm.image as src">
-            <img
-              [src]="img(src)"
-              (error)="imgBrokenCreate = true"
-              (load)="imgBrokenCreate = false"
-              style="width: 160px; height: 90px; object-fit: cover; border-radius: 8px"
-            />
-            <div class="text-danger small mt-1" *ngIf="imgBrokenCreate">
-              No se pudo cargar la imagen.
+    @if (showCreate) {
+      <div class="card card-body amenity-create-form">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">Nombre</label>
+            <input
+              class="form-control input-soft"
+              placeholder="Nombre de amenity"
+              [(ngModel)]="createForm.name"
+              name="name"
+              required
+              />
             </div>
+            <div class="col-md-6">
+              <label class="form-label">Tipo</label>
+              <select class="form-select input-soft" [(ngModel)]="createForm.type" name="type" required>
+                <option [ngValue]="undefined">Selecciona tipo…</option>
+                <option [ngValue]="amenityTypes.HOTEL">Hotel</option>
+                <option [ngValue]="amenityTypes.ROOM">Habitación</option>
+              </select>
+            </div>
+            <div class="col-12">
+              <label class="form-label">Imagen URL</label>
+              <input
+                class="form-control input-soft"
+                placeholder="https://ejemplo.com/imagen.jpg"
+                [(ngModel)]="createForm.image"
+                name="image"
+                />
+                @if (createForm.image; as src) {
+                  <div class="mt-2">
+                    <img
+                      [src]="img(src)"
+                      (error)="imgBrokenCreate = true"
+                      (load)="imgBrokenCreate = false"
+                      style="width: 160px; height: 90px; object-fit: cover; border-radius: 8px"
+                      />
+                      @if (imgBrokenCreate) {
+                        <div class="text-danger small mt-1">
+                          No se pudo cargar la imagen.
+                        </div>
+                      }
+                    </div>
+                  }
+                </div>
+              </div>
+              <div class="mt-3 d-flex gap-2">
+                <button
+                  type="button"
+                  class="btn btn-outline-olive me-2"
+                  (click)="cancelCreate()"
+                  [disabled]="createLoading"
+                  >
+                  Cancelar
+                </button>
+                <button class="btn btn-olive" (click)="create()" [disabled]="createLoading">
+                  {{ createLoading ? 'Creando...' : 'Crear' }}
+                </button>
+              </div>
+            </div>
+          }
+        </details>
+        <div class="mt-3 mb-2">
+          <input
+            type="search"
+            class="form-control input-soft"
+            placeholder="Buscar amenities…"
+            [value]="search"
+            (input)="onSearch($any($event.target).value)"
+            />
           </div>
-        </div>
-      </div>
-      <div class="mt-3 d-flex gap-2">
-        <button
-          type="button"
-          class="btn btn-outline-olive me-2"
-          (click)="cancelCreate()"
-          [disabled]="createLoading"
-        >
-          Cancelar
-        </button>
-        <button class="btn btn-olive" (click)="create()" [disabled]="createLoading">
-          {{ createLoading ? 'Creando...' : 'Crear' }}
-        </button>
-      </div>
-    </div>
-  </details>
+          <div class="amenities-grid-wrap">
+            <ag-grid-angular
+              [theme]="gridTheme"
+              [gridOptions]="gridOptions"
+              [rowData]="rowData"
+              [pagination]="true"
+              style="width: 100%; height: 100%"
+              >
+            </ag-grid-angular>
+          </div>
+        }
 
-  <div class="mt-3 mb-2">
-    <input
-      type="search"
-      class="form-control input-soft"
-      placeholder="Buscar amenities…"
-      [value]="search"
-      (input)="onSearch($any($event.target).value)"
-    />
-  </div>
-  <div class="amenities-grid-wrap">
-    <ag-grid-angular
-      [theme]="gridTheme"
-      [gridOptions]="gridOptions"
-      [rowData]="rowData"
-      [pagination]="true"
-      style="width: 100%; height: 100%"
-    >
-    </ag-grid-angular>
-  </div>
-</ng-container>
+        <!-- Detail Form -->
+        @if (selected && !editing) {
+          <app-amenity-detail
+            [amenity]="selected"
+            (editRequested)="onDetailEdit($event)"
+          ></app-amenity-detail>
+        }
 
-<!-- Detail Form -->
-<app-amenity-detail
-  *ngIf="selected && !editing"
-  [amenity]="selected"
-  (editRequested)="onDetailEdit($event)"
-></app-amenity-detail>
-
-<!-- Editing form -->
-<div *ngIf="editing" class="card card-body amenity-edit-form">
-  <h5>Editar Amenity</h5>
-  <div class="row g-3">
-    <div class="col-md-6">
-      <label class="form-label">Nombre *</label>
-      <input class="form-control input-soft" [(ngModel)]="draft.name" name="name" required />
-    </div>
-    <div class="col-md-6">
-      <label class="form-label">Tipo</label>
-      <select class="form-select input-soft" [(ngModel)]="draft.type" name="type" required>
-        <option [ngValue]="amenityTypes.HOTEL">Hotel</option>
-        <option [ngValue]="amenityTypes.ROOM">Habitación</option>
-      </select>
-    </div>
-    <div class="col-12">
-      <label class="form-label">Imagen URL</label>
-      <input
-        class="form-control input-soft"
-        [(ngModel)]="draft.image"
-        name="image"
-        placeholder="https://ejemplo.com/imagen.jpg"
-      />
-    </div>
-    <div class="col-12" *ngIf="draft.image">
-      <div class="text-center">
-        <img
-          [src]="img(draft.image)"
-          (error)="imgBrokenEdit = true"
-          (load)="imgBrokenEdit = false"
-          style="max-width: 200px; max-height: 150px; object-fit: contain; border-radius: 8px"
-        />
-        <div class="text-danger small mt-1" *ngIf="imgBrokenEdit">No se pudo cargar la imagen.</div>
-      </div>
-    </div>
-  </div>
-  <div class="mt-3 d-flex gap-2">
-    <button
-      type="button"
-      class="btn btn-outline-olive me-2"
-      (click)="cancelEdit()"
-      [disabled]="loading"
-    >
-      Cancelar
-    </button>
-    <button class="btn btn-olive" (click)="saveEdit()" [disabled]="loading">
-      {{ loading ? 'Guardando...' : 'Guardar' }}
-    </button>
-  </div>
-</div>
+        <!-- Editing form -->
+        @if (editing) {
+          <div class="card card-body amenity-edit-form">
+            <h5>Editar Amenity</h5>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Nombre *</label>
+                <input class="form-control input-soft" [(ngModel)]="draft.name" name="name" required />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Tipo</label>
+                <select class="form-select input-soft" [(ngModel)]="draft.type" name="type" required>
+                  <option [ngValue]="amenityTypes.HOTEL">Hotel</option>
+                  <option [ngValue]="amenityTypes.ROOM">Habitación</option>
+                </select>
+              </div>
+              <div class="col-12">
+                <label class="form-label">Imagen URL</label>
+                <input
+                  class="form-control input-soft"
+                  [(ngModel)]="draft.image"
+                  name="image"
+                  placeholder="https://ejemplo.com/imagen.jpg"
+                  />
+                </div>
+                @if (draft.image) {
+                  <div class="col-12">
+                    <div class="text-center">
+                      <img
+                        [src]="img(draft.image)"
+                        (error)="imgBrokenEdit = true"
+                        (load)="imgBrokenEdit = false"
+                        style="max-width: 200px; max-height: 150px; object-fit: contain; border-radius: 8px"
+                        />
+                        @if (imgBrokenEdit) {
+                          <div class="text-danger small mt-1">No se pudo cargar la imagen.</div>
+                        }
+                      </div>
+                    </div>
+                  }
+                </div>
+                <div class="mt-3 d-flex gap-2">
+                  <button
+                    type="button"
+                    class="btn btn-outline-olive me-2"
+                    (click)="cancelEdit()"
+                    [disabled]="loading"
+                    >
+                    Cancelar
+                  </button>
+                  <button class="btn btn-olive" (click)="saveEdit()" [disabled]="loading">
+                    {{ loading ? 'Guardando...' : 'Guardar' }}
+                  </button>
+                </div>
+              </div>
+            }

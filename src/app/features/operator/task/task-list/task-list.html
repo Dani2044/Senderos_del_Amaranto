@@ -6,60 +6,70 @@
     </h4>
   </div>
 
-  <div *ngIf="error" class="alert alert-danger" role="alert">
-    <i class="fas fa-exclamation-circle me-2"></i>{{ error }}
-  </div>
-
-  <div *ngIf="loading" class="text-center py-5">
-    <div class="spinner-border" role="status">
-      <span class="visually-hidden">Cargando...</span>
+  @if (error) {
+    <div class="alert alert-danger" role="alert">
+      <i class="fas fa-exclamation-circle me-2"></i>{{ error }}
     </div>
-    <p class="mt-2">Cargando tareas...</p>
-  </div>
+  }
+
+  @if (loading) {
+    <div class="text-center py-5">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Cargando...</span>
+      </div>
+      <p class="mt-2">Cargando tareas...</p>
+    </div>
+  }
 
   <!-- Search Bar -->
-  <div *ngIf="!loading" class="row mb-3">
-    <div class="col-md-6">
-      <div class="input-group">
-        <span class="input-group-text">
-          <i class="fas fa-search"></i>
-        </span>
-        <input
-          type="text"
-          class="form-control input-soft"
-          placeholder="Buscar tareas por tipo, estado, staff o habitación..."
-          (input)="onQuickFilterChanged($event)"
-        />
+  @if (!loading) {
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <div class="input-group">
+          <span class="input-group-text">
+            <i class="fas fa-search"></i>
+          </span>
+          <input
+            type="text"
+            class="form-control input-soft"
+            placeholder="Buscar tareas por tipo, estado, staff o habitación..."
+            (input)="onQuickFilterChanged($event)"
+            />
+          </div>
+        </div>
+        <div class="col-md-6 d-flex align-items-center justify-content-end">
+          <span class="text-muted">
+            <i class="fas fa-info-circle me-1"></i>
+            Total: {{ rowData.length }} tareas
+          </span>
+        </div>
       </div>
-    </div>
-    <div class="col-md-6 d-flex align-items-center justify-content-end">
-      <span class="text-muted">
-        <i class="fas fa-info-circle me-1"></i>
-        Total: {{ rowData.length }} tareas
-      </span>
-    </div>
-  </div>
+    }
 
-  <!-- AG Grid Container -->
-  <div *ngIf="!loading && isBrowser" class="grid-wrapper">
-    <ag-grid-angular
-      #agGrid
-      [theme]="gridTheme"
-      [rowData]="rowData"
-      [gridOptions]="gridOptions"
-      [domLayout]="'autoHeight'"
-      class="ag-theme-quartz"
-    >
-    </ag-grid-angular>
-  </div>
+    <!-- AG Grid Container -->
+    @if (!loading && isBrowser) {
+      <div class="grid-wrapper">
+        <ag-grid-angular
+          #agGrid
+          [theme]="gridTheme"
+          [rowData]="rowData"
+          [gridOptions]="gridOptions"
+          [domLayout]="'autoHeight'"
+          class="ag-theme-quartz"
+          >
+        </ag-grid-angular>
+      </div>
+    }
 
-  <!-- No Data Message -->
-  <div *ngIf="!loading && rowData.length === 0" class="alert alert-info text-center">
-    <i class="fas fa-info-circle me-2"></i>
-    {{
-      staffId
+    <!-- No Data Message -->
+    @if (!loading && rowData.length === 0) {
+      <div class="alert alert-info text-center">
+        <i class="fas fa-info-circle me-2"></i>
+        {{
+        staffId
         ? 'No se encontraron tareas para este miembro del staff.'
         : 'No se encontraron tareas.'
-    }}
+        }}
+      </div>
+    }
   </div>
-</div>

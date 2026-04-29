@@ -3,36 +3,39 @@
   (mousedown)="$event.stopPropagation()"
   (click)="$event.stopPropagation()"
   (dblclick)="$event.stopPropagation()"
->
-  <button
-    *ngIf="params.onEdit"
-    type="button"
-    class="btn btn-edit"
-    (click)="onEditDebug(); $event.stopPropagation()"
-    (mousedown)="$event.stopPropagation()"
-    (dblclick)="$event.stopPropagation()"
   >
-    {{ params.editLabel || 'Editar' }}
-  </button>
-  <button
-    *ngIf="params.onDelete"
-    type="button"
-    class="btn btn-delete"
-    (click)="onDeleteDebug(); $event.stopPropagation()"
-    (mousedown)="$event.stopPropagation()"
-    (dblclick)="$event.stopPropagation()"
-  >
-    {{ params.deleteLabel || 'Eliminar' }}
-  </button>
-  <button
-    *ngFor="let btn of params.additionalButtons || []"
-    type="button"
-    class="btn"
-    [ngClass]="btn.class || 'btn-secondary'"
-    (click)="onAdditionalAction(btn); $event.stopPropagation()"
-    (mousedown)="$event.stopPropagation()"
-    (dblclick)="$event.stopPropagation()"
-  >
-    {{ btn.label }}
-  </button>
+  @if (params.onEdit) {
+    <button
+      type="button"
+      class="btn btn-edit"
+      (click)="onEditDebug(); $event.stopPropagation()"
+      (mousedown)="$event.stopPropagation()"
+      (dblclick)="$event.stopPropagation()"
+      >
+      {{ params.editLabel || 'Editar' }}
+    </button>
+  }
+  @if (params.onDelete) {
+    <button
+      type="button"
+      class="btn btn-delete"
+      (click)="onDeleteDebug(); $event.stopPropagation()"
+      (mousedown)="$event.stopPropagation()"
+      (dblclick)="$event.stopPropagation()"
+      >
+      {{ params.deleteLabel || 'Eliminar' }}
+    </button>
+  }
+  @for (btn of params.additionalButtons || []; track btn) {
+    <button
+      type="button"
+      class="btn"
+      [ngClass]="btn.class || 'btn-secondary'"
+      (click)="onAdditionalAction(btn); $event.stopPropagation()"
+      (mousedown)="$event.stopPropagation()"
+      (dblclick)="$event.stopPropagation()"
+      >
+      {{ btn.label }}
+    </button>
+  }
 </div>

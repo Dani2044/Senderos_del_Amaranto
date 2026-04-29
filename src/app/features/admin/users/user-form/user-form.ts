@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, EventEmitter, Input, Output, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { User, Role, RoleEntity } from '../../../../model/user';
@@ -23,7 +23,7 @@ export interface UserFormPayload {
 @Component({
   selector: 'app-user-form',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [FormsModule],
   templateUrl: './user-form.html',
   styleUrls: ['./user-form.css']
 })

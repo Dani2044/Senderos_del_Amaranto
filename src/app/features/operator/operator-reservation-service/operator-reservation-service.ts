@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+
 import { RoomService } from '../../../services/room';
 import { AuthService } from '../../../services/auth';
 import { StaffMemberService } from '../../../services/staff-member';
@@ -12,7 +12,7 @@ import { ReservationDetailOp } from '../reservation/reservation-detail-op/reserv
 
 @Component({
   selector: 'app-operator-reservation-service',
-  imports: [FormsModule, CommonModule, SearchResultTable, ReservationDetailOp],
+  imports: [FormsModule, SearchResultTable, ReservationDetailOp],
   templateUrl: './operator-reservation-service.html',
   styleUrls: ['./operator-reservation-service.css', '../../../../styles.css'],
 })

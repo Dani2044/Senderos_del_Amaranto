@@ -2,12 +2,12 @@ import { Component, inject, OnInit } from '@angular/core';
 import { TaskList } from './task-list/task-list';
 import { AuthService } from '../../../services/auth';
 import { StaffMemberService } from '../../../services/staff-member';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-task',
   standalone: true,
-  imports: [TaskList, CommonModule],
+  imports: [TaskList],
   templateUrl: './task.html',
   styleUrl: './task.css'
 })

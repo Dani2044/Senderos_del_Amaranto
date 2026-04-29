@@ -1,5 +1,5 @@
 import { Component, OnInit, PLATFORM_ID, inject, ViewChild, ElementRef } from '@angular/core';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Reservation } from '../../../../model/reservation';
 import { ReservationService } from '../../../../services/reservation';
@@ -33,7 +33,7 @@ const DATE_FILTER_CONFIG: IDateFilterParams = {
 @Component({
   selector: 'app-reservation-table',
   standalone: true,
-  imports: [CommonModule, FormsModule, AgGridAngular, ReservationDetail],
+  imports: [FormsModule, AgGridAngular, ReservationDetail],
   templateUrl: './reservation-table.html',
   styleUrls: ['./reservation-table.css']
 })

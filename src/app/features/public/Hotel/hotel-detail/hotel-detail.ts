@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ActivatedRoute } from '@angular/router';
 
 import { HotelsService } from '../../../../services/hotels';
@@ -16,7 +16,7 @@ import { HotelRoomsComponent } from '../hotel-rooms/hotel-rooms';
 @Component({
   standalone: true,
   selector: 'app-hotel-detail',
-  imports: [CommonModule, HotelHeroComponent, HotelAmenitiesComponent, HotelLocationComponent, HotelServicesComponent, HotelRoomsComponent],
+  imports: [HotelHeroComponent, HotelAmenitiesComponent, HotelLocationComponent, HotelServicesComponent, HotelRoomsComponent],
   templateUrl: './hotel-detail.html',
   styleUrls: ['./hotel-detail.css']
 })

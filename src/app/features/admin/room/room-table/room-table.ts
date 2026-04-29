@@ -1,5 +1,5 @@
 import { Component, OnInit, PLATFORM_ID, inject, ViewChild, ElementRef } from '@angular/core';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Room } from '../../../../model/room';
 import { RoomService, RoomRequest } from '../../../../services/room';
@@ -35,7 +35,7 @@ type ToastCtor = new (element: string | Element, config?: any) => { show(): void
 @Component({
   selector: 'app-rooms-table',
   standalone: true,
-  imports: [CommonModule, FormsModule, AgGridAngular, RoomDetail],
+  imports: [FormsModule, AgGridAngular, RoomDetail],
   templateUrl: './room-table.html',
   styleUrls: ['./room-table.css']
 })

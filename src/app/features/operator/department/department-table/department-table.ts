@@ -1,5 +1,5 @@
 import { Component, inject, OnInit, PLATFORM_ID, ViewChild, ElementRef } from '@angular/core';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Department } from '../../../../model/department';
 import { Hotel } from '../../../../model/hotel';
@@ -25,7 +25,7 @@ const TEXT_FILTER_CONFIG: ITextFilterParams = {
 @Component({
   selector: 'app-department-table',
   standalone: true,
-  imports: [CommonModule, FormsModule, StaffMemberList, AgGridAngular],
+  imports: [FormsModule, StaffMemberList, AgGridAngular],
   templateUrl: './department-table.html',
   styleUrls: ['./department-table.css']
 })

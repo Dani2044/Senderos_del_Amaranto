@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { forkJoin, of, switchMap, zip } from 'rxjs';
 
 import { ServiceOffering } from '../../../../model/service-offering';
@@ -34,7 +34,7 @@ const NUMBER_FILTER_CONFIG: INumberFilterParams = {
 @Component({
   selector: 'app-services-table',
   standalone: true,
-  imports: [CommonModule, FormsModule, AgGridAngular, ServicesFormComponent, ServicesDetail],
+  imports: [FormsModule, AgGridAngular, ServicesFormComponent, ServicesDetail],
   templateUrl: './services-table.html',
   styleUrls: ['./services-table.css'],
   encapsulation: ViewEncapsulation.None

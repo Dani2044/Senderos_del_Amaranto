@@ -1,138 +1,164 @@
-<ng-container *ngIf="reservationStatus === 'FINISHED'; else activeSummary">
+@if (reservationStatus === 'FINISHED') {
   <div class="summary-card">
     <h3 class="summary-title">Pagos registrados</h3>
-
     <div class="summary-content">
-      <div class="summary-row" *ngIf="items?.length">
-        <span class="label"><strong>Servicios Reserva (total con impuestos)</strong></span>
-        <span class="value">{{ formatCurrency(total) }}</span>
-      </div>
-      <div class="summary-items" *ngIf="items?.length">
-        <div class="item" *ngFor="let item of items">
-          <div class="item-main">
-            <span class="label">
-              {{ item.service?.name || 'Servicio ' + (item.service_id || '') }}
-            </span>
-          </div>
-          <div class="item-price">
-            <span class="qty">x{{ item.qty }}</span>
-            <span class="unit">{{ formatCurrency(item.unit_price) }}</span>
-            <span class="line">{{ formatCurrency(getItemSubtotal(item)) }}</span>
-          </div>
+      @if (items?.length) {
+        <div class="summary-row">
+          <span class="label"><strong>Servicios Reserva (total con impuestos)</strong></span>
+          <span class="value">{{ formatCurrency(total) }}</span>
         </div>
-        <div class="summary-divider"></div>
-      </div>
-
-      <div class="summary-row" *ngIf="otherPayments?.length">
-        <span class="label"><strong>Otros</strong></span>
-        <span class="value">{{ formatCurrency(otherTotalAll) }}</span>
-      </div>
-      <div class="summary-items" *ngIf="otherPayments?.length">
-        <div class="summary-row" *ngFor="let pay of otherPayments">
-          <span class="label">
-            {{ pay.tx_reference || 'Pago #' + pay.payment_id }}
-            <span
-              class="badge ms-2"
-              [ngClass]="getPaymentStatusBadge(pay.status || '')"
-            >
-              {{ getPaymentStatusText(pay.status || '') }}
-            </span>
-          </span>
-          <span class="value">{{ formatCurrency(pay.amount) }}</span>
+      }
+      @if (items?.length) {
+        <div class="summary-items">
+          @for (item of items; track item) {
+            <div class="item">
+              <div class="item-main">
+                <span class="label">
+                  {{ item.service?.name || 'Servicio ' + (item.service_id || '') }}
+                </span>
+              </div>
+              <div class="item-price">
+                <span class="qty">x{{ item.qty }}</span>
+                <span class="unit">{{ formatCurrency(item.unit_price) }}</span>
+                <span class="line">{{ formatCurrency(getItemSubtotal(item)) }}</span>
+              </div>
+            </div>
+          }
+          <div class="summary-divider"></div>
         </div>
-        <div class="summary-divider"></div>
-      </div>
-
+      }
+      @if (otherPayments?.length) {
+        <div class="summary-row">
+          <span class="label"><strong>Otros</strong></span>
+          <span class="value">{{ formatCurrency(otherTotalAll) }}</span>
+        </div>
+      }
+      @if (otherPayments?.length) {
+        <div class="summary-items">
+          @for (pay of otherPayments; track pay) {
+            <div class="summary-row">
+              <span class="label">
+                {{ pay.tx_reference || 'Pago #' + pay.payment_id }}
+                <span
+                  class="badge ms-2"
+                  [ngClass]="getPaymentStatusBadge(pay.status || '')"
+                  >
+                  {{ getPaymentStatusText(pay.status || '') }}
+                </span>
+              </span>
+              <span class="value">{{ formatCurrency(pay.amount) }}</span>
+            </div>
+          }
+          <div class="summary-divider"></div>
+        </div>
+      }
       <div class="summary-row total">
         <span class="label">Total general</span>
         <span class="value">{{ formatCurrency(finishedGrandTotal) }}</span>
       </div>
     </div>
   </div>
-</ng-container>
-
-<ng-template #activeSummary>
-  <div class="summary-section" *ngIf="reservationStatus !== 'FINISHED'">
-    <div class="summary-card">
-      <h3 class="summary-title">Resumen de Pagos</h3>
-
-      <div class="summary-content">
-        <div class="summary-row">
-          <span class="label">Reserva</span>
-          <span class="value">#{{ reservationId }}</span>
-        </div>
-        <div class="summary-row" *ngIf="currentUser as u">
-          <span class="label">Cliente</span>
-          <span class="value">{{ u.full_name }}</span>
-        </div>
-        <div class="summary-divider"></div>
-        <div class="summary-row" *ngIf="items?.length">
-          <span class="label"><strong>Servicios contratados (total con impuestos)</strong></span>
-        </div>
-        <div class="summary-items" *ngIf="items?.length; else noItems">
-          <div class="item" *ngFor="let item of items">
-            <div class="item-main">
-              <span class="label">
-                {{ item.service?.name || 'Servicio ' + (item.service_id || '') }}
-              </span>
+} @else {
+  @if (reservationStatus !== 'FINISHED') {
+    <div class="summary-section">
+      <div class="summary-card">
+        <h3 class="summary-title">Resumen de Pagos</h3>
+        <div class="summary-content">
+          <div class="summary-row">
+            <span class="label">Reserva</span>
+            <span class="value">#{{ reservationId }}</span>
+          </div>
+          @if (currentUser; as u) {
+            <div class="summary-row">
+              <span class="label">Cliente</span>
+              <span class="value">{{ u.full_name }}</span>
             </div>
-            <div class="item-price">
-              <span class="qty">x{{ item.qty }}</span>
-              <span class="unit">{{ formatCurrency(item.unit_price) }}</span>
-              <span class="line">{{ formatCurrency(getItemSubtotal(item)) }}</span>
+          }
+          <div class="summary-divider"></div>
+          @if (items?.length) {
+            <div class="summary-row">
+              <span class="label"><strong>Servicios contratados (total con impuestos)</strong></span>
             </div>
+          }
+          @if (items?.length) {
+            <div class="summary-items">
+              @for (item of items; track item) {
+                <div class="item">
+                  <div class="item-main">
+                    <span class="label">
+                      {{ item.service?.name || 'Servicio ' + (item.service_id || '') }}
+                    </span>
+                  </div>
+                  <div class="item-price">
+                    <span class="qty">x{{ item.qty }}</span>
+                    <span class="unit">{{ formatCurrency(item.unit_price) }}</span>
+                    <span class="line">{{ formatCurrency(getItemSubtotal(item)) }}</span>
+                  </div>
+                </div>
+              }
+              <div class="summary-divider"></div>
+            </div>
+          } @else {
+            <div class="summary-row"><small class="text-muted">No hay servicios.</small></div>
+            <div class="summary-divider"></div>
+          }
+          @if (otherPayments?.length) {
+            <div class="summary-row">
+              <span class="label"><strong>Otros</strong></span>
+            </div>
+          }
+          @if (otherPayments?.length) {
+            <div class="summary-items">
+              @for (pay of otherPayments; track pay) {
+                <div class="summary-row">
+                  <span class="label">
+                    {{ pay.tx_reference || ('Pago #' + pay.payment_id) }}
+                    <span
+                      class="badge ms-2"
+                      [ngClass]="getPaymentStatusBadge(pay.status || '')"
+                      >
+                      {{ getPaymentStatusText(pay.status || '') }}
+                    </span>
+                  </span>
+                  <span class="value">{{ formatCurrency(pay.amount) }}</span>
+                </div>
+              }
+              @if (!pendingOtherPayments?.length) {
+                <div class="summary-row">
+                  <small class="text-muted">No hay cargos pendientes.</small>
+                </div>
+              }
+              <div class="summary-divider"></div>
+            </div>
+          }
+          <div class="summary-row">
+            <span class="label">Subtotal servicios</span>
+            <span class="value">{{ formatCurrency(serviceSubtotal) }}</span>
+          </div>
+          @if (otherPayments?.length) {
+            <div class="summary-row">
+              <span class="label">Subtotal cuenta de otros</span>
+              <span class="value">{{ formatCurrency(otherSubtotal) }}</span>
+            </div>
+          }
+          <div class="summary-row">
+            <span class="label">Impuestos (19%)</span>
+            <span class="value">{{ formatCurrency(taxes) }}</span>
           </div>
           <div class="summary-divider"></div>
-        </div>
-        <ng-template #noItems>
-          <div class="summary-row"><small class="text-muted">No hay servicios.</small></div>
-          <div class="summary-divider"></div>
-        </ng-template>
-
-        <div class="summary-row" *ngIf="otherPayments?.length">
-          <span class="label"><strong>Otros</strong></span>
-        </div>
-        <div class="summary-items" *ngIf="otherPayments?.length">
-          <div class="summary-row" *ngFor="let pay of otherPayments">
-            <span class="label">
-              {{ pay.tx_reference || ('Pago #' + pay.payment_id) }}
-              <span
-                class="badge ms-2"
-                [ngClass]="getPaymentStatusBadge(pay.status || '')"
-              >
-                {{ getPaymentStatusText(pay.status || '') }}
-              </span>
-            </span>
-            <span class="value">{{ formatCurrency(pay.amount) }}</span>
+          <div class="summary-row total">
+            <span class="label">Total servicios (con impuestos)</span>
+            <span class="value">{{ formatCurrency(total) }}</span>
           </div>
-          <div class="summary-row" *ngIf="!pendingOtherPayments?.length">
-            <small class="text-muted">No hay cargos pendientes.</small>
-          </div>
-          <div class="summary-divider"></div>
-        </div>
-
-        <div class="summary-row">
-          <span class="label">Subtotal servicios</span>
-          <span class="value">{{ formatCurrency(serviceSubtotal) }}</span>
-        </div>
-        <div class="summary-row" *ngIf="otherPayments?.length">
-          <span class="label">Subtotal cuenta de otros</span>
-          <span class="value">{{ formatCurrency(otherSubtotal) }}</span>
-        </div>
-        <div class="summary-row">
-          <span class="label">Impuestos (19%)</span>
-          <span class="value">{{ formatCurrency(taxes) }}</span>
-        </div>
-        <div class="summary-divider"></div>
-        <div class="summary-row total">
-          <span class="label">Total servicios (con impuestos)</span>
-          <span class="value">{{ formatCurrency(total) }}</span>
-        </div>
-        <div class="summary-row total" *ngIf="otherPayments?.length">
-          <span class="label">Total general</span>
-          <span class="value">{{ formatCurrency(grandTotal) }}</span>
+          @if (otherPayments?.length) {
+            <div class="summary-row total">
+              <span class="label">Total general</span>
+              <span class="value">{{ formatCurrency(grandTotal) }}</span>
+            </div>
+          }
         </div>
       </div>
     </div>
-  </div>
-</ng-template>
+  }
+}
+

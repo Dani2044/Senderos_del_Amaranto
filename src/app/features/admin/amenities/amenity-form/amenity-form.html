@@ -24,15 +24,16 @@
         [(ngModel)]="draft.image"
         name="image"
         placeholder="https://ejemplo.com/imagen.jpg"
-      />
+        />
 
-      <div class="mt-3" *ngIf="draft.image">
-        <div class="image-preview">
-          <img
-            [src]="draft.image"
-            (load)="onImageLoad()"
-            (error)="onImageError()"
-            [class.opacity-0]="imgBroken"
+        @if (draft.image) {
+          <div class="mt-3">
+            <div class="image-preview">
+              <img
+                [src]="draft.image"
+                (load)="onImageLoad()"
+                (error)="onImageError()"
+                [class.opacity-0]="imgBroken"
             style="
               width: 200px;
               height: 140px;
@@ -40,28 +41,31 @@
               border-radius: 8px;
               border: 1px solid #dee2e6;
             "
-            alt="Vista previa de la imagen"
-          />
-          <div *ngIf="imgBroken" class="text-danger mt-2">
-            <i class="bi bi-exclamation-triangle-fill"></i>
-            No se pudo cargar la imagen
-          </div>
+                alt="Vista previa de la imagen"
+                />
+                @if (imgBroken) {
+                  <div class="text-danger mt-2">
+                    <i class="bi bi-exclamation-triangle-fill"></i>
+                    No se pudo cargar la imagen
+                  </div>
+                }
+              </div>
+            </div>
+          }
+        </div>
+
+        <div class="col-12 text-end">
+          <button
+            type="button"
+            class="btn btn-outline-olive me-2"
+            (click)="cancelEdit()"
+            [disabled]="loading"
+            >
+            Cancelar
+          </button>
+          <button type="submit" class="btn btn-olive" [disabled]="loading || form.invalid">
+            Guardar
+          </button>
         </div>
       </div>
-    </div>
-
-    <div class="col-12 text-end">
-      <button
-        type="button"
-        class="btn btn-outline-olive me-2"
-        (click)="cancelEdit()"
-        [disabled]="loading"
-      >
-        Cancelar
-      </button>
-      <button type="submit" class="btn btn-olive" [disabled]="loading || form.invalid">
-        Guardar
-      </button>
-    </div>
-  </div>
-</form>
+    </form>

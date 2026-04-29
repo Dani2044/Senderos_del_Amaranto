@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import type { AgFilterComponent } from 'ag-grid-angular';
@@ -17,7 +17,7 @@ interface MultiSelectFilterParams<TData> extends IFilterParams<TData> {
 @Component({
   selector: 'app-multi-select-filter',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [FormsModule],
   templateUrl: './multi-select-filter.html',
   styleUrls: ['./multi-select-filter.css']
 })

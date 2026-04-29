@@ -1,5 +1,5 @@
 import { Component, Input, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 
 export interface HotelModel {
   hotel_id?: number;
@@ -11,7 +11,7 @@ export interface HotelModel {
 @Component({
   selector: 'app-hotel-hero',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './hotel-hero.html',
   styleUrls: ['./hotel-hero.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

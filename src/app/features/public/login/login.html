@@ -15,9 +15,11 @@
     </div>
 
     <!-- Toast local -->
-    <div *ngIf="flash()" class="toast" [class.toast--error]="flash()?.type === 'error'">
-      {{ flash()?.text }}
-    </div>
+    @if (flash()) {
+      <div class="toast" [class.toast--error]="flash()?.type === 'error'">
+        {{ flash()?.text }}
+      </div>
+    }
 
     <h3 class="title">Login</h3>
     <p class="subtitle">Por favor ingrese sus datos</p>
@@ -25,41 +27,55 @@
     <form [formGroup]="form" (ngSubmit)="onSubmit()" [attr.action]="null" novalidate>
       <div class="field" [class.invalid]="f.email.invalid && (f.email.touched || f.email.dirty)">
         <input type="email" formControlName="email" placeholder="Email" autocomplete="email" />
-        <div class="hint" *ngIf="f.email.errors && (f.email.touched || f.email.dirty)">
-          <span *ngIf="f.email.errors['required']">El email es obligatorio.</span>
-          <span *ngIf="f.email.errors['email']">Formato de email inválido.</span>
-        </div>
+        @if (f.email.errors && (f.email.touched || f.email.dirty)) {
+          <div class="hint">
+            @if (f.email.errors['required']) {
+              <span>El email es obligatorio.</span>
+            }
+            @if (f.email.errors['email']) {
+              <span>Formato de email inválido.</span>
+            }
+          </div>
+        }
       </div>
 
       <div
         class="field"
         [class.invalid]="f.password.invalid && (f.password.touched || f.password.dirty)"
-      >
+        >
         <input
           type="password"
           formControlName="password"
           placeholder="Contraseña"
           autocomplete="current-password"
-        />
-        <div class="hint" *ngIf="f.password.errors && (f.password.touched || f.password.dirty)">
-          <span *ngIf="f.password.errors['required']">La contraseña es obligatoria.</span>
+          />
+          @if (f.password.errors && (f.password.touched || f.password.dirty)) {
+            <div class="hint">
+              @if (f.password.errors['required']) {
+                <span>La contraseña es obligatoria.</span>
+              }
+            </div>
+          }
         </div>
+
+        <button class="btn" [disabled]="form.invalid || loading()">
+          @if (!loading()) {
+            <span>Entrar</span>
+          }
+          @if (loading()) {
+            <span class="spinner"></span>
+          }
+        </button>
+      </form>
+
+      <p class="muted">
+        ¿No tienes cuenta?
+        <a
+          [routerLink]="['/register']"
+          [queryParams]="{ returnUrl: returnUrl }"
+          queryParamsHandling="merge"
+          >Crear cuenta</a
+          >
+        </p>
       </div>
-
-      <button class="btn" [disabled]="form.invalid || loading()">
-        <span *ngIf="!loading()">Entrar</span>
-        <span *ngIf="loading()" class="spinner"></span>
-      </button>
-    </form>
-
-    <p class="muted">
-      ¿No tienes cuenta?
-      <a
-        [routerLink]="['/register']"
-        [queryParams]="{ returnUrl: returnUrl }"
-        queryParamsHandling="merge"
-        >Crear cuenta</a
-      >
-    </p>
-  </div>
-</div>
+    </div>

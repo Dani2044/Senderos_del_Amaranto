@@ -1,5 +1,5 @@
 import { Component, OnInit, inject, Inject, PLATFORM_ID, ElementRef, ViewChild } from '@angular/core';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { AgGridAngular } from 'ag-grid-angular';
 import { ColDef, GridApi, GridOptions, ModuleRegistry, AllCommunityModule, PaginationModule } from 'ag-grid-community';
@@ -16,7 +16,7 @@ import { debounceTime, Subject } from 'rxjs';
 @Component({
   standalone: true,
   selector: 'app-admin-users',
-  imports: [CommonModule, FormsModule, AgGridAngular, UserFormComponent, UserDetailComponent],
+  imports: [FormsModule, AgGridAngular, UserFormComponent, UserDetailComponent],
   styleUrls: ['./users.css'],
   templateUrl: `./users.html`,
 })

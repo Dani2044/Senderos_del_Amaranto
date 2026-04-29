@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RoomType } from '../../../../model/room-type';
@@ -10,7 +10,7 @@ export interface RoomTypeFormPayload {
 @Component({
   selector: 'app-room-type-form',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [FormsModule],
   templateUrl: './room-type-form.html',
   styleUrls: ['./room-type-form.css']
 })

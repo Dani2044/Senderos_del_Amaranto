@@ -1,4 +1,4 @@
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 import { Component, EventEmitter, Inject, Input, OnChanges, Output, PLATFORM_ID, SimpleChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AgGridAngular } from 'ag-grid-angular';
@@ -13,7 +13,7 @@ import { ActionButtonsParams } from '../../action-buttons-cell/action-buttons-pa
 @Component({
   selector: 'app-services-schedule-table',
   standalone: true,
-  imports: [CommonModule, FormsModule, AgGridAngular],
+  imports: [FormsModule, AgGridAngular],
   templateUrl: './services-schedule-table.html',
   styleUrls: ['./services-schedule-table.css']
 })

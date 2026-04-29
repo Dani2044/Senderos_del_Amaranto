@@ -1,11 +1,11 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-room-rv',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './room-rv.html',
   styleUrls: ['./room-rv.scss'],
 })

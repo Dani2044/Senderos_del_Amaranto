@@ -1,11 +1,11 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { Amenity, AmenityType } from '../../../../model/amenity';
 
 @Component({
   selector: 'app-amenity-detail',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './amenity-detail.html',
   styleUrls: ['./amenity-detail.css', '../amenities.css'],
 })

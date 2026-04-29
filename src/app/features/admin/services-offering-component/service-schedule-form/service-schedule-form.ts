@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ServiceSchedule } from '../../../../model/service-schedule';
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+
 
 export const DAY_ORDER = [
   'MONDAY',
@@ -118,7 +118,7 @@ function sortDayValues(days: DayValue[]): DayValue[] {
 
 @Component({
   selector: 'app-service-schedule-form',
-  imports: [CommonModule, FormsModule],
+  imports: [FormsModule],
   templateUrl: './service-schedule-form.html',
   styleUrl: './service-schedule-form.css'
 })
