@@ -84,7 +84,6 @@ h1 {
 
 .plant-img {
   position: absolute;
-  /* Bajamos el GIF para que la base se oculte tras el botón */
   bottom: 35px; 
   left: 50%;
   transform: translateX(-50%);
