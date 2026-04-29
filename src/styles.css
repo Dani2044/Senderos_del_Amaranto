@@ -7,8 +7,6 @@ body {
   overflow-x: clip;
 }
 
-/* usa hidden si tu navegador no soporta clip */
-
 :root {
   --c-sand: #e0d4be;
   --c-ivory: #f2f3ed;
@@ -16,19 +14,17 @@ body {
   --c-olive: #778e69;
   --c-ink: #151513;
 
-  --page-bg: #f2f3ed; /* de la paleta */
+  --page-bg: #f2f3ed;
   --text-ink: #151513;
 
   --font-title: 'Quantico', system-ui, sans-serif;
   --font-body: 'Lato', system-ui, sans-serif;
 
-  /*landing*/
-
-  /* Colors */
   --brand-color: #778e69;
   --black: hsl(0, 0%, 0%);
   --white: hsl(0, 0%, 100%);
 }
+
 body {
   background: var(--page-bg);
   color: var(--text-ink);
@@ -37,16 +33,12 @@ body {
   padding: 0;
 }
 
-html,
-body {
+html, body {
   font-family: var(--font-body);
   overscroll-behavior-y: none;
 }
-h1,
-h2,
-h3,
-.display,
-.title {
+
+h1, h2, h3, .display, .title {
   font-family: var(--font-title);
   letter-spacing: 0.2px;
 }
@@ -57,11 +49,13 @@ h3,
   box-shadow: 0 20px 60px rgba(21, 21, 19, 0.12);
   border: 1px solid rgba(21, 21, 19, 0.06);
 }
+
 .btn-olive {
   background: var(--c-olive);
   border-color: var(--c-olive);
   color: #fff;
 }
+
 .btn-olive:hover {
   filter: brightness(0.95);
 }
@@ -71,15 +65,17 @@ h3,
   border-color: var(--c-olive);
   background: transparent;
 }
-.btn-outline-olive:hover,
-.btn-outline-olive.active {
+
+.btn-outline-olive:hover, .btn-outline-olive.active {
   background: var(--c-olive);
   border-color: var(--c-olive);
   color: #fff;
 }
+
 .link-ink {
   color: var(--c-ink);
 }
+
 .link-ink:hover {
   color: #000;
 }
@@ -89,7 +85,6 @@ body {
   color: var(--text-ink);
 }
 
-/* ====== tarjetas/controles base (reutilizable) ====== */
 .card-elev {
   background: #fff;
   border-radius: 18px;
@@ -102,6 +97,7 @@ body {
   border-color: var(--c-olive);
   color: #fff;
 }
+
 .btn-olive:hover {
   filter: brightness(0.95);
 }
@@ -113,14 +109,12 @@ body {
   color: #000;
 }
 
-/* Inputs “glass” suaves que combinan con la barra superior */
 .input-soft {
   background: rgba(21, 21, 19, 0.04) !important;
   border: 0 !important;
   border-radius: 12px !important;
 }
 
-/* Tarjetas auth que ya usabas */
 .auth-card {
   background: #fff;
   border-radius: 18px;
@@ -128,10 +122,9 @@ body {
   border: 1px solid rgba(21, 21, 19, 0.06);
 }
 
-/* --- Leaflet custom pin (global) --- */
 .map-pin {
   position: relative;
-  width: 16px; /* debe coincidir con iconSize */
+  width: 16px;
   height: 16px;
 }
 
@@ -145,7 +138,6 @@ body {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
 }
 
-/* opcional: una “colita” */
 .map-pin .pin::after {
   content: '';
   position: absolute;
@@ -158,12 +150,10 @@ body {
   border-radius: 2px;
 }
 
-/* asegúrate de que se vea sobre el mapa */
 .leaflet-marker-icon.map-pin {
   z-index: 500 !important;
 }
 
-/* Estilo consistente para los títulos de crear en todos los formularios */
 details summary {
   font-family: var(--font-title);
   font-weight: 600;
@@ -176,7 +166,6 @@ h4, input[type="search"] {
   font-weight: 600;
 }
 
-/* === Responsive tables === */
 .table-modern {
   width: 100%;
   border-collapse: separate;

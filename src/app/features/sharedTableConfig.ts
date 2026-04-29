@@ -13,8 +13,6 @@ export const DATE_FILTER_CONFIG: IDateFilterParams = {
 
 export const AG_GRID_LOCALE = {
   ...AG_GRID_LOCALE_ES,
-  // override here if you want custom wording, e.g.
-  // paginationPageSize: 'Filas por página',
 };
 
 export const gridTheme = themeQuartz.withParams({
