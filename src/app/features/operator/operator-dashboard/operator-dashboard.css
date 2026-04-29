@@ -1,0 +1,62 @@
+.card-elev {
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 12px 36px rgba(21, 21, 19, 0.1);
+  border: 1px solid rgba(21, 21, 19, 0.06);
+}
+
+.soft-grid {
+  --ag-foreground-color: var(--c-ink);
+  --ag-background-color: var(--c-ivory);
+  --ag-header-background-color: var(--c-ink);
+  --ag-header-foreground-color: #fff;
+  --ag-odd-row-background-color: rgba(119, 142, 105, 0.06);
+  --ag-row-border-color: rgba(21, 21, 19, 0.08);
+  --ag-border-color: rgba(21, 21, 19, 0.1);
+  --ag-selected-row-background-color: rgba(188, 195, 153, 0.25);
+  --ag-font-size: 14px;
+  --ag-font-family: inherit;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* Reservation cards */
+.reservation-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+}
+
+.reservation-card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 12px;
+  border: 1px solid rgba(21, 21, 19, 0.06);
+  box-shadow: 0 6px 18px rgba(21, 21, 19, 0.04);
+}
+
+.reservation-card .card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.reservation-card .id {
+  font-weight: 600;
+}
+
+.reservation-card .status.badge {
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-size: 12px;
+}
+
+.reservation-card .card-body .line {
+  margin-bottom: 6px;
+}
+
+.reservation-card .small {
+  color: var(--c-muted, #6b6b6b);
+  font-size: 12px
+}

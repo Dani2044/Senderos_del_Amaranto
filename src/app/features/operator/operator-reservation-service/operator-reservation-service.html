@@ -1,0 +1,29 @@
+<div class="container mt-4" *ngIf="!selected">
+  <h1 class="text-center">Agregar servicios a una Reserva</h1>
+
+  <form (ngSubmit)="search()" class="input-group searchbar mb-3">
+    <input
+      [(ngModel)]="roomNumber"
+      class="form-control"
+      placeholder="Ingrese el número de habitación"
+      name="roomNumber"
+    />
+    <button type="submit" class="btn btn-primary">Buscar</button>
+  </form>
+
+  <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
+  <app-search-result-table
+    [reservations]="reservations"
+    (openDetail)="onOpenDetail($event)"
+    (activateReservation)="activateReservation($event)"
+    (deactivateReservation)="deactivateReservation($event)"
+  ></app-search-result-table>
+</div>
+
+<!-- Detail view -->
+<app-reservation-detail-op
+  *ngIf="selected"
+  [reservation]="selected"
+  (closeRequested)="onCloseDetail()"
+></app-reservation-detail-op>

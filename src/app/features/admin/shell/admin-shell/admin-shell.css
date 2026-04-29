@@ -1,0 +1,59 @@
+:host {
+  --ink: var(--c-ink);
+  --olive: var(--c-olive);
+  --ivory: var(--c-ivory);
+}
+
+.shell {
+  min-height: 100vh;
+  background: var(--ivory);
+}
+
+/* Sidebar */
+.sidebar {
+  width: 260px;
+  background: var(--ink);
+  color: #fff;
+  border-top-right-radius: 22px;
+  border-bottom-right-radius: 22px;
+  box-shadow: 6px 0 24px rgba(21, 21, 19, 0.2);
+}
+
+.logo-img {
+  width: 150px;
+  height: 150px;
+  object-fit: contain;
+}
+
+.nav-link {
+  color: rgba(255, 255, 255, 0.85);
+}
+.nav-link:hover,
+.nav-link.active {
+  background: var(--olive);
+  color: #fff;
+}
+
+.text-light-weak {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* Main */
+.main {
+  overflow: auto;
+}
+
+/* Topbar reducido */
+.card-elev {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 14px 40px rgba(21, 21, 19, 0.12);
+  border: 1px solid rgba(21, 21, 19, 0.06);
+  padding: 8px 16px;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+}

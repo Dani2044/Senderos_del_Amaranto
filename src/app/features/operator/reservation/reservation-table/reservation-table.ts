@@ -1,0 +1,397 @@
+import { Component, inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
+import { ReservationDetailOp } from '../reservation-detail-op/reservation-detail-op';
+import { AgGridAngular } from 'ag-grid-angular';
+import { FormsModule } from '@angular/forms';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import {
+  AG_GRID_LOCALE,
+  DATE_FILTER_CONFIG,
+  gridTheme as sharedGridTheme,
+  TEXT_FILTER_CONFIG,
+} from '../../../sharedTableConfig';
+import { updateResponsiveColumns as setResponsiveColumnsVisibility } from '../../../admin/sharedTable';
+import {
+  AllCommunityModule,
+  ColDef,
+  GridApi,
+  GridOptions,
+  GridSizeChangedEvent,
+  ISizeAllColumnsToContentParams,
+  ModuleRegistry,
+} from 'ag-grid-community';
+import { ReservationService } from '../../../../services/reservation';
+import { PaymentService } from '../../../../services/payment';
+import { finalize } from 'rxjs';
+import { MultiSelectFilterComponent } from '../../../admin/filters/multi-select-filter/multi-select-filter';
+import { Reservation } from '../../../../model/reservation';
+import { ActionButtonsComponent } from '../../../admin/action-buttons-cell/action-buttons-cell';
+import { ActionButtonsParams } from '../../../admin/action-buttons-cell/action-buttons-param';
+import { getStatusBadge, getStatusText } from '../reservation';
+import { ReservationFacade } from '../reservation';
+
+@Component({
+  selector: 'app-reservation-table',
+  imports: [CommonModule, FormsModule, AgGridAngular, ReservationDetailOp],
+  templateUrl: './reservation-table.html',
+  styleUrl: './reservation-table.css',
+})
+export class ReservationTableOperatorComponent implements OnInit, OnDestroy {
+  isBrowser: boolean = false;
+  loading: boolean = true;
+
+  // Data source
+  reservations: Reservation[] = [];
+  rowData: Reservation[] = [];
+
+  // Selection and detail
+  selected?: Reservation;
+  // Hide table when detail enters edit mode
+  detailEditing = false;
+
+  private gridApi?: GridApi<Reservation>;
+  readonly gridTheme: typeof sharedGridTheme = sharedGridTheme;
+  private currentOpId?: number;
+  private platformId = inject(PLATFORM_ID);
+  private readonly autoSizeParams: ISizeAllColumnsToContentParams = {
+    defaultMinWidth: 120,
+  };
+  private readonly responsiveHiddenColumns = ['reservationId', 'clientName', 'hotelName'];
+  private columnsHiddenForCompact = false;
+  compactLayout = false;
+  private readonly handleResize = (event?: GridSizeChangedEvent | Event) => {
+    const width =
+      (event && 'clientWidth' in event ? event.clientWidth ?? undefined : undefined) ??
+      (this.isBrowser ? window.innerWidth : undefined);
+    const height =
+      (event && 'clientHeight' in event ? event.clientHeight ?? undefined : undefined) ??
+      (this.isBrowser ? window.innerHeight : undefined);
+
+    this.updateLayoutMode();
+    this.updateResponsiveColumns(width, height);
+    this.autoSizeColumns();
+  };
+
+  constructor(
+    private service: ReservationService,
+    private facade: ReservationFacade,
+    private payments: PaymentService
+  ) {
+    this.isBrowser = isPlatformBrowser(this.platformId);
+    if (this.isBrowser) {
+      ModuleRegistry.registerModules([AllCommunityModule]);
+    }
+  }
+
+  ngOnInit(): void {
+    if (this.isBrowser) {
+      this.updateLayoutMode();
+      window.addEventListener('resize', this.handleResize);
+    }
+    this.loadData();
+  }
+
+  loadData() {
+    this.loading = true;
+    this.facade
+      .getHotelReservationsForOperator()
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe({
+        next: (enriched) => {
+          this.reservations = enriched;
+          this.rowData = enriched;
+          if (this.search) {
+            this.withGridApi((api) => api.setGridOption('quickFilterText', this.search));
+          }
+          this.updateResponsiveColumns();
+          this.autoSizeColumns();
+        },
+        error: (err) => console.error('Error loading reservations:', err),
+      });
+  }
+
+  ngOnDestroy(): void {
+    if (this.isBrowser) {
+      window.removeEventListener('resize', this.handleResize);
+    }
+  }
+
+  gridOptions: GridOptions<Reservation> = {
+    localeText: AG_GRID_LOCALE,
+    rowSelection: 'single',
+    defaultColDef: {
+      resizable: true,
+      wrapText: true,
+      autoHeight: true,
+      flex: 0,
+      minWidth: 90,
+    },
+    getRowId: (params) => params.data.reservation_id?.toString() || '',
+    onGridReady: (params) => {
+      this.gridApi = params.api;
+      this.updateLayoutMode();
+      this.updateResponsiveColumns();
+      this.autoSizeColumns();
+    },
+    onGridSizeChanged: (event) => this.handleResize(event),
+    onFirstDataRendered: () => this.autoSizeColumns(),
+    onGridPreDestroyed: () => {
+      this.gridApi = undefined;
+    },
+    onSelectionChanged: (params) => {
+      const [row] = params.api.getSelectedRows();
+      this.selected = row || undefined;
+    },
+    columnDefs: [
+      {
+        headerName: 'ID',
+        field: 'reservation_id',
+        colId: 'reservationId',
+        minWidth: 60,
+      },
+      {
+        headerName: 'Cliente',
+        colId: 'clientName',
+        filter: MultiSelectFilterComponent,
+        filterParams: {
+          valueGetter: (row: Reservation) => row.user?.full_name || `Usuario ${row.user_id}`,
+          title: 'Clientes',
+        },
+        valueGetter: (params) =>
+          params.data?.user?.full_name || `Usuario ${params.data?.user_id || 'N/A'}`,
+        minWidth: 150,
+      },
+      {
+        headerName: 'Identificador',
+        valueGetter: (params) => params.data?.user?.national_id || '',
+        filter: 'agTextColumnFilter',
+        filterParams: TEXT_FILTER_CONFIG,
+        minWidth: 160,
+      },
+      {
+        headerName: 'Hotel',
+        colId: 'hotelName',
+        filter: MultiSelectFilterComponent,
+        filterParams: {
+          valueGetter: (row: Reservation) => row.hotel?.name || `Hotel ${row.hotel_id}`,
+          title: 'Hoteles',
+        },
+        valueGetter: (params) =>
+          params.data?.hotel?.name || `Hotel ${params.data?.hotel_id || 'N/A'}`,
+        minWidth: 150,
+      },
+      {
+        headerName: 'Habitación',
+        valueGetter: (params) =>
+          params.data?.room?.number || `Habitación ${params.data?.room_id || 'N/A'}`,
+        filter: 'agTextColumnFilter',
+        filterParams: TEXT_FILTER_CONFIG,
+        minWidth: 140,
+      },
+      {
+        headerName: 'Check-in',
+        field: 'check_in',
+        filter: 'agDateColumnFilter',
+        filterParams: DATE_FILTER_CONFIG,
+        minWidth: 140,
+      },
+      {
+        headerName: 'Check-out',
+        field: 'check_out',
+        filter: 'agDateColumnFilter',
+        filterParams: DATE_FILTER_CONFIG,
+        minWidth: 140,
+      },
+      {
+        headerName: 'Estado',
+        field: 'status',
+        filter: MultiSelectFilterComponent,
+        filterParams: {
+          valueGetter: (row: Reservation) => getStatusText(row.status),
+          title: 'Estados',
+        },
+        cellRenderer: (p: any) => {
+          const s = String(p.value || '');
+          const el = document.createElement('span');
+          el.classList.add('badge', getStatusBadge(s));
+          el.textContent = getStatusText(s);
+          return el;
+        },
+        minWidth: 140,
+      },
+      {
+        headerName: 'Acciones',
+        filter: false,
+        minWidth: 200,
+        cellRenderer: ActionButtonsComponent<Reservation>,
+        cellRendererParams: (p: { data: Reservation }) => {
+          const row = p.data as Reservation;
+          const status = row?.status;
+          const canEditDelete =
+            status === 'PENDING' || status === 'CONFIRMED' || status === 'CHECKIN';
+
+          // Extra action button depending on status
+          const extraButton = ['CONFIRMED', 'PENDING'].includes(status)
+            ? {
+                label: 'Activar',
+                class: 'btn-details',
+                action: (r: Reservation) => this.activateReservation(r),
+              }
+            : status === 'CHECKIN'
+            ? {
+                label: 'Desactivar',
+                class: 'btn-delete',
+                action: (r: Reservation) => this.deactivateReservation(r),
+              }
+            : status === 'FINISHED'
+            ? {
+                label: 'Detalles',
+                class: 'btn-edit',
+                action: (r: Reservation) => this.openEditForRow(r),
+              }
+            : undefined;
+
+          return {
+            onEdit: canEditDelete ? (r: Reservation) => this.beginEdit(r) : undefined,
+            onDelete: canEditDelete ? (r: Reservation) => this.deleteReservation(r) : undefined,
+            additionalButtons: extraButton ? [extraButton] : [],
+          };
+        },
+      } as ColDef<Reservation>,
+    ],
+  };
+
+  openEditForRow(row: Reservation) {
+    this.selected = row;
+  }
+
+  beginEdit(row: Reservation) {
+    // Open the detail view for the selected reservation
+    this.selected = row;
+  }
+
+  activateReservation(reservation: Reservation): void {
+    if (!reservation.reservation_id) return;
+    this.service.activate(reservation.reservation_id).subscribe({
+      next: () => {
+        this.loadData();
+      },
+      error: () => {
+        alert('Error activating reservation');
+      },
+    });
+  }
+
+  deactivateReservation(reservation: Reservation): void {
+    const id = reservation.reservation_id;
+    if (!id) return;
+    this.payments.allPaid(id).subscribe({
+      next: (sum) => {
+        if (!sum?.allPaid) {
+          alert('No se puede finalizar: hay pagos pendientes.');
+          return;
+        }
+        this.service.deactivate(id).subscribe({
+          next: () => this.loadData(),
+          error: () => alert('Error desactivando la reserva'),
+        });
+      },
+      error: () => alert('No se pudo verificar el estado de los pagos de la reserva'),
+    });
+  }
+
+  payReservation(r: Reservation) {
+    throw new Error('Method not implemented.');
+  }
+  // Delete
+  deleteReservation(reservation: Reservation): void {
+    if (!reservation.reservation_id) return;
+    if (!confirm('¿Cancelar (eliminar) esta reserva?')) return;
+
+    this.service.delete(reservation.reservation_id).subscribe({
+      next: () => {
+        this.reservations = this.reservations.filter(
+          (r) => r.reservation_id !== reservation.reservation_id
+        );
+        this.rowData = this.rowData.filter((r) => r.reservation_id !== reservation.reservation_id);
+
+        this.withGridApi((api) => {
+          api.applyTransaction({ remove: [reservation] });
+          api.deselectAll();
+        });
+
+        // Limpiar selección para volver a la tabla
+        this.selected = undefined;
+      },
+      error: () => {
+        alert('Error deleting reservation');
+      },
+    });
+  }
+
+  // Search
+  search: string = '';
+
+  onSearch(term: string): void {
+    this.search = term;
+    this.withGridApi((api) => api.setGridOption('quickFilterText', term || undefined));
+  }
+
+  // Edit Reservation Services
+
+  private withGridApi(action: (api: GridApi<Reservation>) => void): void {
+    const api = this.gridApi;
+    if (!api) return;
+    const maybeDestroyed = (api as GridApi<Reservation> & { isDestroyed?: () => boolean })
+      .isDestroyed;
+    if (typeof maybeDestroyed === 'function' && maybeDestroyed.call(api)) {
+      return;
+    }
+    action(api);
+  }
+
+  private updateLayoutMode(): void {
+    if (!this.isBrowser) return;
+    const isCompact = window.innerWidth < 1366 || window.innerHeight < 768;
+    if (this.compactLayout !== isCompact) {
+      this.compactLayout = isCompact;
+      this.withGridApi((api) => {
+        api.refreshCells({ force: true });
+        api.resetRowHeights();
+      });
+    }
+  }
+
+  private updateResponsiveColumns(width?: number, height?: number): void {
+    if (!this.isBrowser) return;
+
+    const effectiveWidth = width ?? window.innerWidth;
+    const effectiveHeight = height ?? window.innerHeight;
+
+    const shouldHide = effectiveWidth <= 1024;
+
+    if (shouldHide === this.columnsHiddenForCompact) {
+      return;
+    }
+
+    this.columnsHiddenForCompact = shouldHide;
+
+    this.withGridApi((api) => {
+      setResponsiveColumnsVisibility(api, this.responsiveHiddenColumns, shouldHide);
+      api.sizeColumnsToFit();
+    });
+  }
+
+  private autoSizeColumns(): void {
+    this.withGridApi((api) => {
+      api.autoSizeAllColumns(this.autoSizeParams);
+      api.resetRowHeights();
+    });
+  }
+
+  // editingChanged is handled in template to set detailEditing
+  onCloseDetail() {
+    this.selected = undefined;
+    this.detailEditing = false;
+    this.loadData();
+  }
+}

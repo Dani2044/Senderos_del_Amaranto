@@ -1,0 +1,21 @@
+.card-elev {
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 12px 36px rgba(21, 21, 19, 0.1);
+  border: 1px solid rgba(21, 21, 19, 0.06);
+}
+
+.soft-grid {
+  --ag-foreground-color: var(--c-ink);
+  --ag-background-color: var(--c-ivory);
+  --ag-header-background-color: #F3F5EF;
+  --ag-header-foreground-color: #2F3B2F;
+  --ag-odd-row-background-color: rgba(119, 142, 105, 0.06);
+  --ag-row-border-color: rgba(21, 21, 19, 0.08);
+  --ag-border-color: rgba(21, 21, 19, 0.1);
+  --ag-selected-row-background-color: rgba(188, 195, 153, 0.25);
+  --ag-font-size: 14px;
+  --ag-font-family: inherit;
+  border-radius: 12px;
+  overflow: hidden;
+}
