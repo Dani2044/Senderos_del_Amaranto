@@ -1,5 +1,5 @@
 {
-  "name": "angular-web-project",
+  "name": "senderos-del-amaranto",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:angular-web-project": "node dist/angular-web-project/server/server.mjs"
+    "serve:ssr:senderos-del-amaranto": "node dist/senderos-del-amaranto/server/server.mjs"
   },
   "prettier": {
     "printWidth": 100,

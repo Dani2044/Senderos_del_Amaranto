@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular-web-project": {
+    "senderos-del-amaranto": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -61,10 +61,10 @@
           },
           "configurations": {
             "production": {
-              "buildTarget": "angular-web-project:build:production"
+              "buildTarget": "senderos-del-amaranto:build:production"
             },
             "development": {
-              "buildTarget": "angular-web-project:build:development"
+              "buildTarget": "senderos-del-amaranto:build:development"
             }
           },
           "defaultConfiguration": "development"
