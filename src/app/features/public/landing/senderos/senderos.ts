@@ -3,18 +3,18 @@ import { isPlatformBrowser } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'app-hoteles',
+  selector: 'app-senderos',
   standalone: true,
   imports:[RouterModule],
-  templateUrl: './hoteles.html',
-  styleUrls: ['./hoteles.css']   
+  templateUrl: './senderos.html',
+  styleUrls: ['./senderos.css']   
 })
-export class Hoteles implements AfterViewInit {
+export class Senderos implements AfterViewInit {
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
   ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
-      const hoteles = document.querySelector(".hoteles") as HTMLElement;
+      const senderos = document.querySelector(".senderos") as HTMLElement;
       const cards = document.querySelectorAll(".card-car");
       let index = 0;
 
@@ -23,8 +23,8 @@ export class Hoteles implements AfterViewInit {
 
         const current = cards[index] as HTMLElement;
         const bg = current.getAttribute("data-bg");
-        if (bg && hoteles) {
-          hoteles.style.backgroundImage = `url(${bg})`;
+        if (bg && senderos) {
+          senderos.style.backgroundImage = `url(${bg})`;
         }
 
         current.classList.add("active");

@@ -32,7 +32,7 @@
   text-decoration: underline;
 }
 
-.hoteles {
+.senderos {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
