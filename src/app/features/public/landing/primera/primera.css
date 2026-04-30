@@ -5,7 +5,7 @@ h1 {
 .landing-section {
   width: 100%;
   height: 100vh;
-  background-image: url('https://i.pinimg.com/1200x/52/22/bc/5222bca711c1663c59d473410b91bfe4.jpg');
+  background-image: url('/4.jpeg');
   background-position: center;
   background-attachment: fixed;
   background-size: cover;
@@ -22,7 +22,7 @@ h1 {
 }
 
 .landing-title {
-  font-size: 50px;
+  font-size: 100px;
   color: #ffffff;
   margin-bottom: 10px;
 }
@@ -41,20 +41,7 @@ h1 {
   width: 100%;
 }
 
-.landing-container {
-  margin: 20px 30px;
-  padding: 15px 30px 30px 30px;
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px) saturate(150%);
-  -webkit-backdrop-filter: blur(10px) saturate(150%);
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  color: #fff;
-}
+
 
 .landing-spect {
   color: white;
