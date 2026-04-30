@@ -177,6 +177,10 @@
   max-width: 420px;
 }
 
+.card-text p {
+  font-size: 1.5rem;
+}
+
 .card-image {
   display: flex;
   justify-content: center;
@@ -228,7 +232,7 @@
   position: absolute;
   bottom: 12px;
   left: 12px;
-  font-size: 14px;
+  font-size: 20px;
   font-weight: 600;
   color: #fff;
   text-shadow: 0 2px 5px rgba(0, 0, 0, 0.6);

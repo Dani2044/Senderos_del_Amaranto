@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Navbar } from './navbar/navbar';
 import { Primera } from './primera/primera';
 import { Hoteles } from './hoteles/hoteles';
 import { Details } from './details/details';
@@ -8,7 +9,7 @@ import { Footer } from './footer/footer';
 
 @Component({
   selector: 'app-landing',
-  imports: [Primera, Hoteles, Details, Stats, Testimonials, Footer],
+  imports: [Navbar,Primera, Hoteles, Details, Stats, Testimonials, Footer],
   templateUrl: './landing.html',
   styleUrl: './landing.css'
 })

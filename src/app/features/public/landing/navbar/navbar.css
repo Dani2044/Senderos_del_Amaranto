@@ -1,24 +1,55 @@
 .navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
   display: flex;
   justify-content: center;
-  margin-bottom: 50px;
+  align-items: center;
+  padding: 18px 0;
+  background: rgba(10, 20, 5, 0.72);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
 }
 
 .navbar-links {
   list-style: none;
   display: flex;
-  gap: 25px;
+  gap: 48px;
   padding: 0;
   margin: 0;
 }
 
 .navbar-links li a {
   text-decoration: none;
-  color: white;
-  font-weight: 500;
+  color: rgba(255, 255, 255, 0.92);
+  font-weight: 600;
+  font-size: 17px;
+  letter-spacing: 0.04em;
   transition: color 0.3s;
+  position: relative;
+  padding-bottom: 4px;
+}
+
+.navbar-links li a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #a8c48a;
+  border-radius: 2px;
+  transition: width 0.3s ease;
 }
 
 .navbar-links li a:hover {
-  color: #152304; 
+  color: #c8e6a0;
+}
+
+.navbar-links li a:hover::after {
+  width: 100%;
 }
