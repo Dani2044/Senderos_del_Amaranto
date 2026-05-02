@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
+import { Navbar } from '../navbar/navbar';
+import { MapComponent } from './map/map';
 
 @Component({
   selector: 'app-contacto',
-  imports: [],
+  imports: [Navbar, MapComponent],
   templateUrl: './contacto.component.html',
   styleUrl: './contacto.component.css',
 })

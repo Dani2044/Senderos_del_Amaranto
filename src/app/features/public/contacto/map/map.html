@@ -1,0 +1,39 @@
+<section class="location-section" [style.--plant-bg]="plantBg">
+  <div class="glass">
+    <header class="header">
+      <h3 class="title">Ubicación & Alrededores</h3>
+      <div class="sub">
+        <strong class="name">{{ hotel.name }}</strong>
+        <span class="coords">· {{ hotel.latitude }}, {{ hotel.longitude }}</span>
+      </div>
+    </header>
+    <div class="map-wrap">
+      <div #map class="map" aria-label="Mapa de ubicación"></div>
+    </div>
+
+    @if (attractions.length) {
+      <section class="nearby">
+        <h4 class="nearby-title">Atracciones cercanas</h4>
+        <ul class="nearby-list">
+          @for (a of attractions; track a.name) {
+            <li class="nearby-item">
+              <div class="info">
+                <div class="name">{{ a.name }}</div>
+                <div class="cat">{{ a.category }}</div>
+              </div>
+              <div class="dist">{{ distanceKm(a) }}</div>
+            </li>
+          }
+        </ul>
+      </section>
+    }
+
+    @if (legend.length) {
+      <footer class="legend">
+        @for (l of legend; track l.label) {
+          <span class="dot" [style.--c]="l.color"></span>{{ l.label }}
+        }
+      </footer>
+    }
+  </div>
+</section>
